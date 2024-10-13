@@ -169,11 +169,13 @@ flowchart TD
 
 - **Hint**: Place the division operation inside a `try` block, handle `ArithmeticException` in the `catch` block, and in the `finally` block, print the completion message.
 
+Certainly! Here's the original version of **Section 1.6** using Java I/O to demonstrate `try-with-resources`:
+
+---
+
 ### 1.6 try-with-resources
 
 The `try-with-resources` statement ensures that each resource is closed at the end of the statement. A resource must implement the `AutoCloseable` interface.
-
-Since you haven't covered Java I/O yet, we'll use a custom resource to demonstrate `try-with-resources`.
 
 **Syntax:**
 
@@ -185,60 +187,41 @@ try (ResourceType resource = new ResourceType()) {
 }
 ```
 
-**Example with a Custom Resource:**
+**Example:**
 
 ```java
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class TryWithResourcesExample {
     public static void main(String[] args) {
-        try (MyResource resource = new MyResource()) {
-            resource.doSomething();
-        } catch (Exception e) {
-            System.out.println("Exception occurred: " + e.getMessage());
+        try (BufferedReader br = new BufferedReader(new FileReader("example.txt"))) {
+            String line = br.readLine();
+            System.out.println(line);
+        } catch (IOException e) {
+            System.out.println("IOException occurred!");
         }
-    }
-}
-
-class MyResource implements AutoCloseable {
-    public MyResource() {
-        System.out.println("Resource opened.");
-    }
-
-    public void doSomething() throws Exception {
-        System.out.println("Resource is being used.");
-        // Simulate an exception
-        throw new Exception("An error occurred while using the resource.");
-    }
-
-    @Override
-    public void close() {
-        System.out.println("Resource closed.");
     }
 }
 ```
 
 <details>
-<summary>Output</summary>
+<summary>Output (Assuming "example.txt" is missing)</summary>
 
 ```
-Resource opened.
-Resource is being used.
-Resource closed.
-Exception occurred: An error occurred while using the resource.
+IOException occurred!
 ```
-
 </details>
 
-In this example:
+#### DIY Exercise 3: Implementing try-with-resources
 
-- `MyResource` is a custom class that implements `AutoCloseable`.
-- The `close()` method is automatically called at the end of the `try` block, even if an exception occurs.
-- This demonstrates resource management without using Java I/O.
+- **Task**: Write a program that reads from a file using `try-with-resources` to ensure the file is closed properly.
+- **Hint**: Use `BufferedReader` and handle `IOException`.
 
-#### DIY Exercise 3: Implementing try-with-resources with a Custom Resource
+---
 
-- **Task**: Create a class `SimpleTimer` that implements `AutoCloseable`. In its constructor, record the start time. In the `close()` method, calculate and print the elapsed time. Use `try-with-resources` to measure the execution time of a block of code.
-
-- **Hint**: Use `System.currentTimeMillis()` to get the current time in milliseconds.
+This example uses Java I/O to illustrate how `try-with-resources` ensures that the `BufferedReader` is automatically closed after use, even if an exception occurs.
 
 ### 1.7 throw and throws Keywords
 
