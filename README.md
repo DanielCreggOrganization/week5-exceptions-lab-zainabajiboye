@@ -139,7 +139,7 @@ Cannot divide by zero!
 
 </details>
 
-#### DIY Exercise 1: Handling an ArrayIndexOutOfBoundsException
+#### DIY Exercise 2: Handling an ArrayIndexOutOfBoundsException
 
 - **Task**: Suppose you have an array representing temperatures for each day of the week. Write a program that prompts the user to enter a day number (1-7) and prints the temperature for that day. Handle the case where the user enters an invalid day number using a `try-catch` block.
 
@@ -199,7 +199,7 @@ flowchart TD
     FinallyBlock --> End
 ```
 
-#### DIY Exercise 2: Using finally Block
+#### DIY Exercise 3: Using finally Block
 
 - **Task**: Create a simple calculator program that performs division. Prompt the user to enter two numbers and divide them. Use a `try-catch` block to handle any `ArithmeticException` (e.g., division by zero). Use a `finally` block to print "Calculation completed."
 
@@ -250,7 +250,7 @@ IOException occurred!
 ```
 </details>
 
-#### DIY Exercise 3: Implementing try-with-resources
+#### DIY Exercise 4: Implementing try-with-resources
 
 - **Task**: Write a program that reads from a file using `try-with-resources` to ensure the file is closed properly.
 - **Hint**: Use `BufferedReader` and handle `IOException`.
@@ -294,7 +294,7 @@ Age must be at least 18.
 
 </details>
 
-#### DIY Exercise 4: Throwing Exceptions
+#### DIY Exercise 5: Throwing Exceptions
 
 - **Task**: In a grading system, create a method `calculateGrade` that takes a student's score as input. If the score is negative or greater than 100, throw an `IllegalArgumentException` with the message "Invalid score". Handle the exception in the main method and display the error message to the user.
 
@@ -327,7 +327,7 @@ Exception handled: An error occurred.
 
 </details>
 
-#### DIY Exercise 5: Declaring Exceptions with throws
+#### DIY Exercise 6: Declaring Exceptions with throws
 
 - **Task**: Write a method `processData` that declares it throws an `Exception`. In your `main` method, call `processData` and handle the exception, displaying an appropriate message to the user.
 
@@ -377,7 +377,7 @@ User must be at least 18 years old.
 
 </details>
 
-#### DIY Exercise 6: Creating a Custom Exception
+#### DIY Exercise 7: Creating a Custom Exception
 
 - **Task**: Create a custom exception class named `InsufficientFundsException` that extends `Exception`. Write a `BankAccount` class with a `withdraw` method that throws `InsufficientFundsException` if the withdrawal amount is greater than the account balance.
 
