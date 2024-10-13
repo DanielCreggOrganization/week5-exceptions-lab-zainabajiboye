@@ -66,7 +66,7 @@ classDiagram
 
 #### DIY Exercise 1: Fixing Unchecked Exceptions and handling a checked Exception
 
-In this exercise, you will practice dealing with unchecked exceptions. Some exceptions can be fixed by correcting the code, while others need to be handled using `try-catch` blocks.
+In this exercise, you will practice dealing with unchecked exceptions. Some exceptions can be fixed by correcting the code, while others need to be handled using `try-catch` blocks. Before you beging create a package called ``ie.atu.exceptions``. Place all you code in here. 
 
 - **Task 1**: The following code contains two unchecked exceptions that need to be fixed. Identify and correct them.
 
