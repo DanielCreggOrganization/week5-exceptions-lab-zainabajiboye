@@ -64,6 +64,42 @@ classDiagram
     RuntimeException <|-- ArithmeticException
 ```
 
+#### DIY Exercise 1: Fixing Unchecked Exceptions and handling a checked Exception
+
+In this exercise, you will practice dealing with unchecked exceptions. Some exceptions can be fixed by correcting the code, while others need to be handled using `try-catch` blocks.
+
+- **Task 1**: The following code contains two unchecked exceptions that need to be fixed. Identify and correct them.
+
+    ```java
+    public class UncheckedExceptionsFix {
+        public static void main(String[] args) {
+            String text = null;
+            System.out.println(text.length()); // Throws NullPointerException
+
+            int[] numbers = {1, 2, 3};
+            System.out.println(numbers[5]); // Throws ArrayIndexOutOfBoundsException
+        }
+    }
+    ```
+
+    - **Hint**: Make sure to check if `text` is `null` before calling methods on it, and ensure that you access a valid index of the array.
+
+- **Task 2**: The following code contains a checked exception that needs to be handled using a `try-catch` block. Add the appropriate `try-catch` block to handle the exception.
+
+    ```java
+    import java.io.FileReader;
+    import java.io.IOException;
+
+    public class CheckedExceptionHandling {
+        public static void main(String[] args) {
+            FileReader reader = new FileReader("example.txt"); // This line may throw IOException
+            System.out.println("File opened successfully");
+        }
+    }
+    ```
+
+    - **Hint**: Wrap the `FileReader` instantiation in a `try-catch` block to catch `IOException` and print an appropriate error message.
+
 ### 1.4 try-catch Blocks
 
 The `try-catch` block allows you to handle exceptions gracefully.
