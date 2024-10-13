@@ -1,3 +1,6 @@
+
+---
+
 ## 1. Introduction
 
 ### 1.1 What is an Exception?
@@ -102,8 +105,9 @@ Cannot divide by zero!
 
 #### DIY Exercise 1: Handling an ArrayIndexOutOfBoundsException
 
-- **Task**: Write a program that attempts to access an array index that doesn't exist and handle the exception.
-- **Hint**: Create an array of size 3 and try to access the 5th element using a `try-catch` block.
+- **Task**: Suppose you have an array representing temperatures for each day of the week. Write a program that prompts the user to enter a day number (1-7) and prints the temperature for that day. Handle the case where the user enters an invalid day number using a `try-catch` block.
+
+- **Hint**: Use an array of size 7 and handle `ArrayIndexOutOfBoundsException` when the user enters a day number outside the range.
 
 ### 1.5 finally Block
 
@@ -161,12 +165,15 @@ flowchart TD
 
 #### DIY Exercise 2: Using finally Block
 
-- **Task**: Write a program that performs division and uses a `finally` block to print "Operation completed."
-- **Hint**: Include the division inside a `try` block, handle `ArithmeticException`, and add a `finally` block that prints the message.
+- **Task**: Create a simple calculator program that performs division. Prompt the user to enter two numbers and divide them. Use a `try-catch` block to handle any `ArithmeticException` (e.g., division by zero). Use a `finally` block to print "Calculation completed."
+
+- **Hint**: Place the division operation inside a `try` block, handle `ArithmeticException` in the `catch` block, and in the `finally` block, print the completion message.
 
 ### 1.6 try-with-resources
 
 The `try-with-resources` statement ensures that each resource is closed at the end of the statement. A resource must implement the `AutoCloseable` interface.
+
+Since you haven't covered Java I/O yet, we'll use a custom resource to demonstrate `try-with-resources`.
 
 **Syntax:**
 
@@ -178,38 +185,60 @@ try (ResourceType resource = new ResourceType()) {
 }
 ```
 
-**Example:**
+**Example with a Custom Resource:**
 
 ```java
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
 public class TryWithResourcesExample {
     public static void main(String[] args) {
-        try (BufferedReader br = new BufferedReader(new FileReader("example.txt"))) {
-            String line = br.readLine();
-            System.out.println(line);
-        } catch (IOException e) {
-            System.out.println("IOException occurred!");
+        try (MyResource resource = new MyResource()) {
+            resource.doSomething();
+        } catch (Exception e) {
+            System.out.println("Exception occurred: " + e.getMessage());
         }
+    }
+}
+
+class MyResource implements AutoCloseable {
+    public MyResource() {
+        System.out.println("Resource opened.");
+    }
+
+    public void doSomething() throws Exception {
+        System.out.println("Resource is being used.");
+        // Simulate an exception
+        throw new Exception("An error occurred while using the resource.");
+    }
+
+    @Override
+    public void close() {
+        System.out.println("Resource closed.");
     }
 }
 ```
 
 <details>
-<summary>Output (Assuming "example.txt" is missing)</summary>
+<summary>Output</summary>
 
 ```
-IOException occurred!
+Resource opened.
+Resource is being used.
+Resource closed.
+Exception occurred: An error occurred while using the resource.
 ```
 
 </details>
 
-#### DIY Exercise 3: Implementing try-with-resources
+In this example:
 
-- **Task**: Write a program that reads from a file using `try-with-resources` to ensure the file is closed properly.
-- **Hint**: Use `BufferedReader` and handle `IOException`.
+- `MyResource` is a custom class that implements `AutoCloseable`.
+- The `close()` method is automatically called at the end of the `try` block, even if an exception occurs.
+- This demonstrates resource management without using Java I/O.
+
+#### DIY Exercise 3: Implementing try-with-resources with a Custom Resource
+
+- **Task**: Create a class `SimpleTimer` that implements `AutoCloseable`. In its constructor, record the start time. In the `close()` method, calculate and print the elapsed time. Use `try-with-resources` to measure the execution time of a block of code.
+
+- **Hint**: Use `System.currentTimeMillis()` to get the current time in milliseconds.
 
 ### 1.7 throw and throws Keywords
 
@@ -221,7 +250,11 @@ IOException occurred!
 ```java
 public class ThrowExample {
     public static void main(String[] args) {
-        validateAge(15); // This will throw an exception
+        try {
+            validateAge(15); // This will throw an exception
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void validateAge(int age) {
@@ -237,34 +270,31 @@ public class ThrowExample {
 <summary>Output</summary>
 
 ```
-Exception in thread "main" java.lang.IllegalArgumentException: Age must be at least 18.
-    at ThrowExample.validateAge(ThrowExample.java:6)
-    at ThrowExample.main(ThrowExample.java:3)
+Age must be at least 18.
 ```
 
 </details>
 
 #### DIY Exercise 4: Throwing Exceptions
 
-- **Task**: Create a method `checkScore` that throws an `IllegalArgumentException` if the score is negative.
-- **Hint**: Use the `throw` keyword and handle the exception in `main`.
+- **Task**: In a grading system, create a method `calculateGrade` that takes a student's score as input. If the score is negative or greater than 100, throw an `IllegalArgumentException` with the message "Invalid score". Handle the exception in the main method and display the error message to the user.
+
+- **Hint**: Use the `throw` keyword to throw the exception, and use a `try-catch` block in `main` to handle it.
 
 **Using `throws`:**
 
 ```java
-import java.io.IOException;
-
 public class ThrowsExample {
     public static void main(String[] args) {
         try {
-            readFile(); // May throw IOException
-        } catch (IOException e) {
-            System.out.println("IOException handled!");
+            performOperation(); // May throw Exception
+        } catch (Exception e) {
+            System.out.println("Exception handled: " + e.getMessage());
         }
     }
 
-    public static void readFile() throws IOException {
-        throw new IOException("File not found.");
+    public static void performOperation() throws Exception {
+        throw new Exception("An error occurred.");
     }
 }
 ```
@@ -273,15 +303,66 @@ public class ThrowsExample {
 <summary>Output</summary>
 
 ```
-IOException handled!
+Exception handled: An error occurred.
 ```
 
 </details>
 
 #### DIY Exercise 5: Declaring Exceptions with throws
 
-- **Task**: Write a method `connectToDatabase` that declares it throws a `SQLException`.
-- **Hint**: Use `throws` in the method signature and handle the exception when calling the method.
+- **Task**: Write a method `processData` that declares it throws an `Exception`. In your `main` method, call `processData` and handle the exception, displaying an appropriate message to the user.
+
+- **Hint**: Use `throws` in the method signature and handle `Exception` when calling the method.
+
+### 1.8 Custom Exceptions
+
+Sometimes, the standard exceptions provided by Java are not sufficient for representing specific error conditions in your application. In such cases, you can create your own custom exceptions by extending the `Exception` class or one of its subclasses.
+
+**Example of a Custom Exception:**
+
+```java
+public class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+```
+
+**Using the Custom Exception:**
+
+```java
+public class CustomExceptionExample {
+    public static void main(String[] args) {
+        try {
+            registerUser(15); // This will throw an exception
+        } catch (InvalidAgeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void registerUser(int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("User must be at least 18 years old.");
+        }
+        System.out.println("User registered successfully.");
+    }
+}
+```
+
+<details>
+<summary>Output</summary>
+
+```
+User must be at least 18 years old.
+```
+
+</details>
+
+#### DIY Exercise 6: Creating a Custom Exception
+
+- **Task**: Create a custom exception class named `InsufficientFundsException` that extends `Exception`. Write a `BankAccount` class with a `withdraw` method that throws `InsufficientFundsException` if the withdrawal amount is greater than the account balance.
+
+- **Hint**: Implement the `withdraw` method to check the balance and throw the custom exception with an appropriate message.
 
 ---
 
@@ -297,5 +378,16 @@ In this lab, you've learned about Java's exception handling mechanisms:
 - **try-with-resources** ensures that resources are closed automatically.
 - The **throw** keyword lets you throw an exception manually.
 - The **throws** keyword indicates that a method might throw exceptions.
+- **Custom Exceptions** allow you to define application-specific error conditions.
 
 Understanding these concepts is crucial for writing robust and error-resistant Java applications.
+
+---
+
+### Additional Notes
+
+- **Custom Exceptions**: By adding the custom exceptions section, you can now create exceptions that are specific to your application's domain, improving error handling and code readability.
+
+- **Simplified try-with-resources Example**: The updated `try-with-resources` section uses a custom class to demonstrate how resources can be managed without relying on Java I/O. This makes the concept accessible even without prior knowledge of I/O operations.
+
+---
